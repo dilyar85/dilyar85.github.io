@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Extend Your Media App to Android Auto - Dilyar&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://dilyar85.github.io/02/05/2017/first/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Dilyar&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://dilyar85.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                          <a class="tag" href="/tags/#Android Auto" title="Android Auto">Android Auto</a>
+                        
+                          <a class="tag" href="/tags/#Developers" title="Developers">Developers</a>
+                        
+                    </div>
+                    <h1>Extend Your Media App to Android Auto</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by Dilyar Safudin on
+                        02-05-2017
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h2><blockquote>
+<p>This is a developing guide to help you extend your existing Android application to a new platform - Android Auto. When I was working on my company’s app (<a href="https://www.ottoradio.com/" target="_blank" rel="external">Otto Radio</a>), I found out that many people asked similar questions about Android Auto development on the Internet, but there were rarely useful answers to them. Therefore, after I finished my job I came up to write down this article to make other developers’ lives easier. Hope you will enjoy it! </p>
+</blockquote>
+<h2 id="Things-to-know-before-you-start"><a href="#Things-to-know-before-you-start" class="headerlink" title="Things to know before you start"></a>Things to know before you start</h2><p>Welcome to Android Auto. Android Auto is really amazing because it makes the driving more enjoyable and safer. Apps on Android Auto are actually running on user’s phone(with <strong>Android 5.0 or higher</strong>), so the car screen is just like a monitor. You don’t have to care too much about the UI but just focus on the functionality of your app. Remember though, not all kinds of apps are supposed to run on Android Auto. There are only three kinds of apps that you can extend to it:</p>
+<ul>
+<li><strong>Messaging App</strong> (display messages and reply using voice control)</li>
+<li><strong>Media App</strong> (only support audio playing)</li>
+<li><strong>Navigation App</strong> (that’s right, android is always more open that iOS)</li>
+</ul>
+<p>This article will focus on how to extend your <strong>media app</strong> to Android Auto. If you already has a media app, it will only take you couple hours and boom, you can have a new platform to launch your app. If you are about to develop a media app, it’s very helpful to consider Android Auto as well, because it will lead you to construct a better model and make your app more powerful. Okay, that’s enough for the blah, and let’s start the coding now!</p>
+<h2 id="Enable-your-app-in-Android-Auto"><a href="#Enable-your-app-in-Android-Auto" class="headerlink" title="Enable your app in Android Auto"></a>Enable your app in Android Auto</h2><p>The first thing you need to do is to define the Auto xml configuration file. Under your project’s <strong>res/xml/</strong> folder, create a new xml file named <code>automotive_desc.xml</code> (or whatever you want to name it). In this xml file you just created, put these lines of codes inside: </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">automotiveApp</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">uses</span> <span class="attr">name</span>=<span class="string">"media"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">automotiveApp</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>Then in your app’s manifest (<code>AndroidManifest.xml</code>), provide a reference to the Auto xml configuration file (which is the one you created in the previous step). Just add the following tag under your <code>&lt;application&gt;</code> element: </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">application</span>&gt;</span></div><div class="line">    ...</div><div class="line">    <span class="tag">&lt;<span class="name">meta-data</span> <span class="attr">android:name</span>=<span class="string">"com.google.android.gms.car.application"</span></span></div><div class="line">        <span class="attr">android:resource</span>=<span class="string">"@xml/automotive_app_desc"</span>/&gt;</div><div class="line">    ...</div><div class="line"><span class="tag">&lt;<span class="name">application</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>Now your app is able to display on Android Auto. However, if users open your app in Android Auto, they can really do nothing. To enable its functionality, you need to first declare a <code>MediaBrowserService</code> and then provide the content as well as the callback methods to tell Android Auto how to play your media. </p>
+<h2 id="Create-MediaBrwoserService-class"><a href="#Create-MediaBrwoserService-class" class="headerlink" title="Create MediaBrwoserService class"></a>Create MediaBrwoserService class</h2><p>You need to allow Android Auto to browse your media content. To do that, first create a subclass of <code>MediaBrowserServiceCompat</code>. For example:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyMediaBrowserService</span> <span class="keyword">extends</span> <span class="title">MediaBrowserServiceCompat</span> </span>&#123;</div><div class="line">    ...</div><div class="line"></div><div class="line">    <span class="meta">@Nullable</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> BrowserRoot <span class="title">onGetRoot</span><span class="params">(@NonNull String clientPackageName, <span class="keyword">int</span> clientUid, </span></span></div><div class="line">    	@Nullable Bundle rootHints) &#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onLoadChildren</span><span class="params">(@NonNull String parentId, </span></span></div><div class="line">    	@NonNull Result&lt;List&lt;MediaBrowserCompat.MediaItem&gt;&gt; result) &#123;</div><div class="line">    	...</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>As you can see, you have to override those two methods above. Don’t be panic yet, I will explain them in the next section of this article. But before that, don’t forget to declare this browser service in your <code>AndroidManifest.xml</code>:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">application</span>&gt;</span></div><div class="line">    ...</div><div class="line">    <span class="tag">&lt;<span class="name">service</span> <span class="attr">android:name</span>=<span class="string">".MyMediaBrowserService"</span></span></div><div class="line">                <span class="attr">android:exported</span>=<span class="string">"true"</span>&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=</span></div><div class="line">                <span class="string">"android.media.browse.MediaBrowserService"</span>/&gt;</div><div class="line">        <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">service</span>&gt;</span></div><div class="line">    ...</div><div class="line"><span class="tag">&lt;<span class="name">application</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>If you already have a playback service and do not want to create a new service specifically for Android Auto, you can easily change your current playback service class to extend <code>MediaBrowserServiceCompat</code> class and update its declaration in <code>AndroidManifest.xml</code> as above. From my experience, this is a better way because you can keep your main playback service unique and put your playback logics in the same place. </p>
+<h2 id="Provide-media-content"><a href="#Provide-media-content" class="headerlink" title="Provide media content"></a>Provide media content</h2><p>In Android Auto, you need to provide a hierarchy of your media content. Android Auto achieves your media content by calling the methods <code>onGetRoot()</code> and <code>onLoadChildren()</code> in your declared <code>MediaBrowserService</code> class. According to Google’s documentation, your implementation of <code>onGetRoot()</code> should return information about the root node of your content hierarchy. You can also decide whether the client should have access to your content in this method. For example:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> BrowserRoot <span class="title">onGetRoot</span><span class="params">(String clientPackageName, <span class="keyword">int</span> clientUid,</span></span></div><div class="line">    Bundle rootHints) &#123;</div><div class="line"></div><div class="line">    <span class="comment">// Verify the client by parameters passed here</span></div><div class="line">    <span class="comment">// You'll need to write your own logic to do this.</span></div><div class="line">    <span class="keyword">if</span> (!isValid(clientPackageName, clientUid)) &#123;</div><div class="line"></div><div class="line">        <span class="comment">//onLoadChildren() or other further calls </span></div><div class="line">        <span class="comment">//for media browsing will not be called</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> BrowserRoot(MY_MEDIA_ROOT_ID, <span class="keyword">null</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>You can use these <a href="https://github.com/dilyar85/Android-Auto-Utilities" target="_blank" rel="external">utility classes</a> to verify the client package name. After that, Android Auto will call your <code>onLoadChildren()</code> method with whatever the media id you passed inside the <code>new BrowserRoot()</code> (<em>MY_MEDIA_ROOT_ID</em> from the previous example) to start browsing your media content. You need to create a list of <code>MediaBrowser.MediaItem</code> objects and call <code>result.sendResult(...)</code> to pass the list:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onLoadChildren</span><span class="params">(<span class="keyword">final</span> String parentMediaId, <span class="keyword">final</span> Result&lt;List&lt;MediaItem&gt;&gt; result)</span> </span>&#123;</div><div class="line"></div><div class="line"></div><div class="line">    List&lt;MediaItem&gt; mediaItems = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="comment">// Check if this is the root menu:</span></div><div class="line">    <span class="keyword">if</span> (MY_MEDIA_ROOT_ID.equals(parentMediaId)) &#123;</div><div class="line"></div><div class="line">        <span class="comment">// build the MediaItem objects for the top level,</span></div><div class="line">        <span class="comment">// and put them in the mediaItems list</span></div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line"></div><div class="line">        <span class="comment">// examine the passed parentMediaId to see which submenu we're at,</span></div><div class="line">        <span class="comment">// and put the children of that menu in the mediaItems list</span></div><div class="line">    &#125;</div><div class="line">    result.sendResult(mediaItems);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>When you are constructing <code>MediaBrowser.MediaItem</code> object, you must provide a <strong>unique ID string</strong> and declare whether the item is <strong>playable</strong> or <strong>browsable</strong>. You can also set the media item’s title, subtitle, and album cover, etc. Here is an example to construct a <code>MediaBrowserCompat.MediaItem</code> object: </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Create a MediaItem object</span></div><div class="line"></div><div class="line">MediaDescriptionCompat description = <span class="keyword">new</span> MediaDescriptionCompat.Builder()</div><div class="line">                                            .setMediaId(yourMediaIdForThisItem)</div><div class="line">                                            .setTitle(yourTitleForThisItem)</div><div class="line">                                            .setSubtitle(yourSubtitleForThisItem)</div><div class="line">                                            .setIconUri(yourImageUriForThisItem))</div><div class="line">                                            .build();</div><div class="line"></div><div class="line">MediaBrowserCompat.MediaItem mediaItem = <span class="keyword">new</span> MediaBrowserCompat.MediaItem(</div><div class="line">                                                description,</div><div class="line">                                                <span class="comment">//Use MediaBrowserCompat.MediaItem.FLAG_BROWSABLE</span></div><div class="line">                                                <span class="comment">//if you instead want this item browsable</span></div><div class="line">                                                MediaBrowserCompat.MediaItem.FLAG_PLAYABLE);</div></pre></td></tr></table></figure>
+<p>When the user clicks the item in his or her car, Android Auto will either play that item if it’s declared playable or call the <code>onLoadChildren()</code> method again if it’s declared as browsable. Remember that you can add as many MediaItem objects as you want inside the list you pass to the <code>result.sendResult(...)</code>. However, Android Auto has some limitation on the numbers of the list and might not display all of the media items for safety reason. </p>
+<h2 id="Enable-playback-control"><a href="#Enable-playback-control" class="headerlink" title="Enable playback control"></a>Enable playback control</h2><p>When the user clicks a playable item, Android Auto will close the browsing menu, switch to main screen, and try playing the selected media item. To enable the playback control, you need to first <strong>register a media session</strong> and <strong>provide a callback class</strong>. For example, inside the <code>onCreate()</code> method of your media browser service, you can do something like this:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyMediaBrowserService</span> <span class="keyword">extends</span> <span class="title">MediaBrowserServiceCompat</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate();</div><div class="line"></div><div class="line">        <span class="comment">// Start a new MediaSession</span></div><div class="line">        MediaSession mSession = <span class="keyword">new</span> MediaSession(<span class="keyword">this</span>, <span class="string">"session tag"</span>);</div><div class="line">        setSessionToken(mSession.getSessionToken());</div><div class="line">        <span class="comment">// Set a callback object to handle play control requests</span></div><div class="line">        <span class="comment">// which implements MediaSession.Callback</span></div><div class="line">        mSession.setCallback(<span class="keyword">new</span> MyMediaSessionCallback());</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>If you never use <code>MediaSession</code> in your own media app, you should start using it now. Even if you don’t want to implement Android Auto, <code>MediaSession</code> will still make your app look better when user’s phone is connected to a BT device. Here is a quick introduction about <code>MediaSession</code> from Google’s documentation:</p>
+<blockquote>
+<p>An Auto device using your app as audio service needs to obtain a MediaSession object from your app. The Auto device uses the session object to send playback commands requested by the Auto user back to your app.<br>When you initialize your browser service, you register that session object with your MediaBrowserService by calling the setSessionToken() method. This step allows clients such as an Auto device to retrieve that object by calling your browser service’s getSessionToken() method.</p>
+</blockquote>
+<p>You can make your <code>MediaSessionCompat.Callback</code> class as an inner class of your <code>MediaBrowserServiceCompat</code> class, so that it would be more maintainable and also easier to implement. For example, if you already define your <code>pause()</code> function as a private method in your playback service, you don’t have to refactor it again for Auto’s callback. There are several methods you can implement for the callback, and <code>onPlayFromMediaId(String mediaId, Bundle extras)</code> is a pretty important one. This method get called when Auto user clicks the playable item from menu, and you are responsible for playing the corresponding content by the <strong>mediaId</strong> it passed. Here is a simple example to implement it:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> class <span class="title">MyMediaSessionCallback</span><span class="params">()</span> extends MediaSessionCompat.Callback </span>&#123;</div><div class="line">    ...</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPlayFromMediaId</span><span class="params">(String mediaId, Bundle extras)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(mediaId.equals(YOUR_CLASSIC_MUSIC_ITEM_ID)) &#123;</div><div class="line">            playYourClassicMusic(...);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(mediaId.equals(YOUR_POP_MUSIC_ITEM_ID))&#123;</div><div class="line">            playYourPopMusic(...);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(...)&#123;</div><div class="line">            ...</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>That’s it! Now users can use your app on Android Auto, Woohoo~! As you can see, extending your media app to Android Auto is not that difficult, as long as you already have a organized model for your media content and a functional playback service. From this article, you learned how to let users browse your media content and play the one they selected on Android Auto. However, there are many other features you can implement on Android Auto and believe me, they look really awesome in the real car. I put them in another article so that I can make this one short and clean. If you have any questions or meet any problems with Android Auto, just write them down below and I will try my best to answer you. Alright, now it’s time to drive your Android Auto car and enjoy the awesome app you just extended! </p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://heydaniyar.github.io/" target="_blank">Daniyar&#39;s Blog</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "hexo-theme-huxblog";
+    var disqus_identifier = "https://dilyar85.github.io/02/05/2017/first/";
+    var disqus_url = "https://dilyar85.github.io/02/05/2017/first/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+            display: none;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/dilyar85">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/dilyar-safudin-384941126">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Dilyar&#39;s Blog 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://dilyar85.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-49627206-1';
+    var _gaDomain = 'huangxuan.me';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '4cc1f2d8f3067386cc5cdb626a202900';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://dilyar85.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
