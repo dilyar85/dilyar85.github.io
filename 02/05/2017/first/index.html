@@ -13,7 +13,7 @@
 
     <title>
         
-          Extend Your Media App to Android Auto - Dilyar&#39;s Blog
+          Extend Your Media App on Android Auto - Dilyar&#39;s Blog
         
     </title>
 
@@ -90,13 +90,6 @@
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/about/">About</a>
                         </li>
                         
@@ -105,6 +98,13 @@
                         
                         <li>
                             <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
@@ -172,7 +172,7 @@
                           <a class="tag" href="/tags/#Developers" title="Developers">Developers</a>
                         
                     </div>
-                    <h1>Extend Your Media App to Android Auto</h1>
+                    <h1>Extend Your Media App on Android Auto</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by Dilyar Safudin on
@@ -230,7 +230,7 @@
 </blockquote>
 <p>You can make your <code>MediaSessionCompat.Callback</code> class as an inner class of your <code>MediaBrowserServiceCompat</code> class, so that it would be more maintainable and also easier to implement. For example, if you already define your <code>pause()</code> function as a private method in your playback service, you don’t have to refactor it again for Auto’s callback. There are several methods you can implement for the callback, and <code>onPlayFromMediaId(String mediaId, Bundle extras)</code> is a pretty important one. This method get called when Auto user clicks the playable item from menu, and you are responsible for playing the corresponding content by the <strong>mediaId</strong> it passed. Here is a simple example to implement it:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> class <span class="title">MyMediaSessionCallback</span><span class="params">()</span> extends MediaSessionCompat.Callback </span>&#123;</div><div class="line">    ...</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPlayFromMediaId</span><span class="params">(String mediaId, Bundle extras)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(mediaId.equals(YOUR_CLASSIC_MUSIC_ITEM_ID)) &#123;</div><div class="line">            playYourClassicMusic(...);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(mediaId.equals(YOUR_POP_MUSIC_ITEM_ID))&#123;</div><div class="line">            playYourPopMusic(...);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(...)&#123;</div><div class="line">            ...</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>That’s it! Now users can use your app on Android Auto, Woohoo~! As you can see, extending your media app to Android Auto is not that difficult, as long as you already have a organized model for your media content and a functional playback service. From this article, you learned how to let users browse your media content and play the one they selected on Android Auto. However, there are many other features you can implement on Android Auto and believe me, they look really awesome in the real car. I put them in another article so that I can make this one short and clean. If you have any questions or meet any problems with Android Auto, just write them down below and I will try my best to answer you. Alright, now it’s time to drive your Android Auto car and enjoy the awesome app you just extended! </p>
+<p>That’s it! Now users can use your app on Android Auto, Woohoo~! From this article, you learned how to let users browse your media content and play the one they selected on Android Auto. There are, however, many other features you can implement on Android Auto and believe me, they look really awesome in the real car. I will write them down in another article so that I can make this one short and clean. If you have any questions or meet any problems with Android Auto, feel free to comment below and I will answer you as soon as I can. Alright, now it’s time to drive your Android Auto car and enjoy the awesome app you just developed! </p>
 
 
                 <hr>
